@@ -104,3 +104,10 @@ export interface AppMenuItemProps {
     root?: boolean;
     className?: string;
 }
+
+export interface MenuContextProps {
+    activeMenu: string;
+    setActiveMenu: (key: string) => void;
+    customPage: 'page1' | 'page2' | '';
+    setCustomPage: (page: 'page1' | 'page2' | '') => void;
+}

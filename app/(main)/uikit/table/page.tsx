@@ -399,7 +399,7 @@ const TableDemo = () => {
                 </div>
             </div>
 
-            <div className="col-12">
+            {/* <div className="col-12">
                 <div className="card">
                     <h5>Frozen Columns</h5>
                     <ToggleButton checked={idFrozen} onChange={(e) => setIdFrozen(e.value)} onIcon="pi pi-lock" offIcon="pi pi-lock-open" onLabel="Unfreeze Id" offLabel="Freeze Id" style={{ width: '10rem' }} />
@@ -416,9 +416,9 @@ const TableDemo = () => {
                         <Column field="balance" header="Balance" body={balanceTemplate} frozen style={{ flexGrow: 1, flexBasis: '120px' }} className="font-bold" alignFrozen="right"></Column>
                     </DataTable>
                 </div>
-            </div>
+            </div> */}
 
-            <div className="col-12">
+            {/* <div className="col-12">
                 <div className="card">
                     <h5>Row Expand</h5>
                     <DataTable value={products} expandedRows={expandedRows} onRowToggle={(e) => setExpandedRows(e.data)} responsiveLayout="scroll" rowExpansionTemplate={rowExpansionTemplate} dataKey="id" header={header}>
@@ -431,9 +431,9 @@ const TableDemo = () => {
                         <Column field="inventoryStatus" header="Status" sortable body={statusBodyTemplate2} />
                     </DataTable>
                 </div>
-            </div>
+            </div> */}
 
-            <div className="col-12">
+            {/* <div className="col-12">
                 <div className="card">
                     <h5>Subheader Grouping</h5>
                     <DataTable
@@ -456,7 +456,7 @@ const TableDemo = () => {
                         <Column field="date" header="Date" style={{ minWidth: '200px' }}></Column>
                     </DataTable>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };
