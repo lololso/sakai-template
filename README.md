@@ -22,3 +22,15 @@ To learn more about Next.js, take a look at the following resources:
 
 -   [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 -   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+## Modified
+
+To create table pages on [app/(main)/table]
+
+-   Datatable
+    -   Edit
+    -   Lazy load
+
+To do
+
+-   filter
