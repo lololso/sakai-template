@@ -59,6 +59,7 @@ export class CustomerConfigsService {
         return Promise.resolve({ data: filtered.slice(start, end), totalRecords: total });
     }
 
+    // 更新資料
     updateCustomer(updated: CustomerConfigs): Promise<void> {
         return new Promise((resolve) => {
             const idx = this.data.findIndex((c) => c.id === updated.id);
