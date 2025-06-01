@@ -20,8 +20,9 @@ const AppMenu = () => {
             label: 'Custom Pages',
             icon: 'pi pi-fw pi-clone',
             items: [
-                { label: 'setting', icon: 'pi pi-fw pi-file', to: '/setting' },
-                { label: 'table', icon: 'pi pi-fw pi-file', to: '/table' }
+                { label: 'Setting', icon: 'pi pi-fw pi-file', to: '/setting' },
+                { label: 'Table', icon: 'pi pi-fw pi-file', to: '/table' },
+                { label: 'Tree search', icon: 'pi pi-fw pi-file', to: '/treeSearch' }
             ]
         }
     ];

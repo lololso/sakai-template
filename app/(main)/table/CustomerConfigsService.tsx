@@ -1,3 +1,5 @@
+'use client';
+
 import { Demo } from '@/types';
 
 export interface CustomerConfigs {
@@ -9,6 +11,10 @@ export interface CustomerConfigs {
     priority: 'High' | 'Medium' | 'Low';
     online: 0 | 1;
     action: string;
+
+    // ===== 新增誰修改 =====
+    whoModified: string; // 修改此使用者帳號
+    modifiedAt: string; // 修改的時間
 }
 
 export interface LazyLoadEvent {
@@ -40,11 +46,17 @@ export class CustomerConfigsService {
                 gender: Math.floor(Math.random() * 3) as 0 | 1 | 2,
                 priority: priorities[Math.floor(Math.random() * priorities.length)],
                 online: Math.random() > 0.5 ? 1 : 0,
-                action: `Action ${i}`
+                action: `Action ${i}`,
+                whoModified: '',
+                modifiedAt: ''
             });
         }
         return arr;
     }
+    /**
+     * 取得分頁資料：傳入 page, size 與 filters 後，
+     * 回傳 { data: 這頁的切片, totalRecords: 符合 filter 的總數 }
+     */
     getCustomers(page: number, size: number, filters: Record<string, any>): Promise<{ data: CustomerConfigs[]; totalRecords: number }> {
         let filtered = [...this.data];
         Object.keys(filters).forEach((field) => {

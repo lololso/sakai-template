@@ -8,6 +8,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputSwitch } from 'primereact/inputswitch';
 import { Toast } from 'primereact/toast';
 import { CustomerConfigs, CustomerConfigsService } from './CustomerConfigsService';
+// import { useSession } from 'next-auth/react'; // NextAuth.js
 
 const priorities = ['High', 'Medium', 'Low'];
 const genderMap: Record<number, string> = { 0: 'Unknown', 1: 'Male', 2: 'Female' };
@@ -24,6 +25,8 @@ export default function CustomerPage() {
     const [customers, setCustomers] = useState<CustomerConfigs[]>([]);
     const [totalRecords, setTotalRecords] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(false);
+    // 選擇row
+    const [selectedCustomer, setSelectedCustomer] = useState<CustomerPageProps | null>(null);
 
     // lazyState 管理分頁/排序/篩選
     const [lazyState, setLazyState] = useState<{
@@ -39,6 +42,10 @@ export default function CustomerPage() {
         sortOrder: null,
         filters: {}
     });
+
+    // 為了簡化示範，這裡暫時不使用真正的 Session 取得使用者
+    // 先預設一個常量，未來要改成從 Session 拿
+    const defaultModifier = 'System';
 
     useEffect(() => {
         loadCustomers();
@@ -142,10 +149,14 @@ export default function CustomerPage() {
         });
     };
 
-    // 【最重要】Row Editor 完成後的 callback
+    // Row Editor 完成後的 callback
     const onRowEditComplete = async (e: DataTableRowEditCompleteEvent<CustomerConfigs>) => {
         const updatedRecord = e.newData as CustomerConfigs;
         const idx = e.index as number;
+
+        // 先寫入預設的「System」
+        updatedRecord.whoModified = defaultModifier;
+        updatedRecord.modifiedAt = new Date().toISOString();
 
         // update service
         try {
@@ -184,7 +195,12 @@ export default function CustomerPage() {
         }
     };
 
-    // 定義 handler
+    // handle物件
+    const handleSelectionChange = (e: DataTableRowEditCompleteEvent<CustomerConfigs>) => {
+        setSelectedCustomer(e.value);
+    };
+
+    // 定義 lazy load 條件
     const onPage = (e: DataTablePageEvent) => {
         setLazyState((prev) => ({ ...prev, first: e.first, rows: e.rows }));
     };
@@ -235,6 +251,9 @@ export default function CustomerPage() {
                 editMode="row"
                 dataKey="id"
                 onRowEditComplete={onRowEditComplete}
+                selectionMode="single"
+                selection={selectedCustomer}
+                onSelectionChange={handleSelectionChange}
             >
                 {/* <Column field="id" header="ID" style={{ width: '120px' }} /> */}
                 <Column field="customerID" header="Customer ID" style={{ width: '140px' }} />
@@ -244,6 +263,9 @@ export default function CustomerPage() {
                 <Column field="priority" header="Priority" editor={dropdownEditor} filter />
                 <Column field="online" header="Online" body={(row) => (row.online ? '●' : '')} editor={switchEditor} filter />
                 <Column field="action" header="Action" editor={textEditor} filter />
+                {/* 新增「誰修改」與「修改時間」欄位 */}
+                <Column field="whoModified" header="Who Modified" style={{ width: '140px' }} />
+                <Column field="modifiedAt" header="Modified At" style={{ width: '180px' }} />
                 <Column rowEditor headerStyle={{ width: '100px', textAlign: 'center' }} />
             </DataTable>
         </div>
